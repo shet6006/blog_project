@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "left header right"
+    "left main right"
+    "footer footer footer";
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr 3fr 1fr;
+  width: 100%;
+  max-width: 1200px;
+  grid-gap: 10px; /* 그리드 항목 사이에 10px 간격을 추가 */
+
+}
+
+.header {
+  grid-area: header;
+  background-color: #282c34;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.left {
+  grid-area: left;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+.main {
+  grid-area: main;
+  padding: 20px;
+}
+
+.content {
+  background-color: bisque;
+  height: 100vh;
+}
+
+.introd {
+  background-color: aqua;
+  text-align: center;
+  font-family:"Nanum Pen Script", sans-serif;
+  font-size: 30px;
+  padding: 0px;
+}
+
+.right {
+  grid-area: right;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  position: sticky;
+  top: 50px; /* 화면 상단에서 고정 위치 */
+  height: fit-content; /* 내용을 기준으로 높이 조절 */
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #282c34;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+p {
+  margin: 5px; /* 위아래 간격을 5px로 설정 */
+}
