@@ -3,10 +3,10 @@ const router = express.Router(); //라우터 선언
 const db = require('./db');
 
 router.post('/', async (req, res) => { //데이터를 서버에 제출하거나 전송할때 사용
-    const { title, content } = req.body; //req.body에서 추출하여서 title, content에 저장
+    const { title, content, category_name } = req.body; //req.body에서 추출하여서 title, content에 저장
     try {
-        const [result] = await db.query('INSERT INTO posts (title, content) VALUES (?, ?)', [title, content]); //posts테이블에 title, content값 삽입
-        res.json({ id: result.insertId,  title, content }); //삽입Id, 타이틀, 컨텐츠가 반환
+        const [result] = await db.query('INSERT INTO posts (title, content, category_name) VALUES (?, ?, ?)', [title, content, category_name]); //posts테이블에 title, content값 삽입
+        res.json({ id: result.insertId, title, content, category_name }); //삽입Id, 타이틀, 컨텐츠가 반환
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => { //데이터를 서버에 제출하거나 
 
 router.get('/showpost', async (req, res) => { //데이터를 읽거나 가져올때 사용
     try {
-        const [rows] = await db.query('SELECT id, title, content FROM posts'); //여기서의 rows, 배열의 row
+        const [rows] = await db.query('SELECT id, title, content, category_name FROM posts'); //여기서의 rows, 배열의 row
         //const titles = rows.map(row=>row.title); //rows.map의미: rows배열에 들어있는 {title: 첫글}과 같은 객체에서 title을 뽑아옴
         res.json(rows);
     } catch (error) {

@@ -25,6 +25,7 @@ const PostView = () => {
         <div>
             <h2>{posts.title}</h2>
             <p>{posts.content}</p>
+            <p>{posts.category_name}</p>
         </div>
     );
 }

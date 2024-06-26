@@ -5,7 +5,7 @@ import Write_Essay from "./Write_Essay";
 import { createBrowserRouter } from "react-router-dom";
 import Introd from "./Introd";
 import PostView from "./PostView";
-
+import Category from "./Category";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: "postview/:id",
                 element: <PostView />,
+            },
+            {
+                path: "createcategory",
+                element: <Category />,
             },
         ],
     },

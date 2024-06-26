@@ -39,6 +39,9 @@ function Content() {
       navigate(`/postview/${id}`);
     };
     
+    const Create_Category = () => {
+      navigate(`/createcategory`);
+    }
     return (
       <div className="content">
         {titles.map((title, index) => (
@@ -47,6 +50,7 @@ function Content() {
             <button onClick={() => delete_post(title.id)}>글 삭제</button>
           </div>
         ))}
+        <button onClick={Create_Category}>카테고리 생성</button>
         <button onClick={handleWrite_EssayButtonClick}>글 쓰기</button>
       </div>
     );
