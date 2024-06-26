@@ -23,7 +23,7 @@ const PostView = () => {
 
     return (
         <div>
-            <h2>{posts.title} {posts.id}</h2>
+            <h2>{posts.title}</h2>
             <p>{posts.content}</p>
         </div>
     );
