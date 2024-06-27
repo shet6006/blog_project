@@ -1,58 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AppDataContext } from './DataContext';
 
 function Content() {
     const navigate = useNavigate();
-    const [titles, setTitles] = useState([]);
+    const { posts, setPosts } = useContext(AppDataContext);
 
-    const delete_post = (id) => {
-      axios.delete('http://localhost:5000/posts/deletepost', { params: { id } })
-      .then(response => {
-        fetch_post();
-      })
-      .catch(error => {
-        console.error('Error deleting post:', error);
-      });
+    const delete_Post = (id) => {
+        axios.delete('http://localhost:5000/posts/deletepost', { params: { id } })
+            .then(response => {
+                // 삭제된 글을 제외한 새로운 posts 배열을 생성
+                const updatedPosts = posts.filter(post => post.id !== id);
+                setPosts(updatedPosts); // 상태 업데이트
+            })
+            .catch(error => {
+                console.error('Error deleting post:', error);
+            });
     };
 
-    const fetch_post = () => {
-      axios.get('http://localhost:5000/posts/showpost')
-      .then(response => {
-        setTitles(response.data);
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching titles:', error);
-      });
+    const create_Post = () => {
+        navigate(`/writepost`);
     };
 
-    useEffect(() => {
-      fetch_post();
-    }, []);
-
-    const handleWrite_EssayButtonClick = () => {
-        navigate(`/writeessay`);
+    const handle_PostView = (id) => {
+        navigate(`/postview/${id}`);
     };
 
-    const handlePostView = (id) => {
-      navigate(`/postview/${id}`);
-    };
-    
-    const Create_Category = () => {
-      navigate(`/createcategory`);
-    }
     return (
-      <div className="content">
-        {titles.map((title, index) => (
-          <div key={title.id}>
-            <span onClick={() => handlePostView(title.id)}>{index + 1} {title.title}</span>
-            <button onClick={() => delete_post(title.id)}>글 삭제</button>
-          </div>
-        ))}
-        <button onClick={Create_Category}>카테고리 생성</button>
-        <button onClick={handleWrite_EssayButtonClick}>글 쓰기</button>
-      </div>
+        <div className="content">
+            {posts.map((post, index) => (
+                <div key={post.id}>
+                    <span onClick={() => handle_PostView(post.id)}>{index + 1} {post.title}</span>
+                    <button onClick={() => delete_Post(post.id)}>글 삭제</button>
+                </div>
+            ))}
+            {/* <button onClick={createCategory}>카테고리 생성</button> */}
+            <button onClick={create_Post}>글 쓰기</button>
+        </div>
     );
 }
 

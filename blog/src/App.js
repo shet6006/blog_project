@@ -1,10 +1,14 @@
 import React from 'react';
-import './App.css';
-import router from './components/Router';
+import { AppDataProvider } from './components/DataContext';
 import { RouterProvider } from 'react-router-dom';
+import router from './components/Router';
+import './App.css';
+
 function App() {
   return (
-    <RouterProvider router={router} />
+    <AppDataProvider>
+      <RouterProvider router={router} />
+    </AppDataProvider>
   );
 }
 

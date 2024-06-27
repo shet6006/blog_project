@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { AppDataContext } from './DataContext';
 
-function Write_Essay() {
+function WritePost() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [name, setName] = useState([]);
+  const { posts, setPosts } = useContext(AppDataContext);
+  const { categories, setCategories } = useContext(AppDataContext);
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState(''); //select박스에서 선택된 옵션
+  const [selectedOption, setSelectedOption] = useState(categories[0].name); //select박스에서 선택된 옵션
   
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  // useEffect(() => {
+  //   setSelectedOption(categories[0].name); // categories 배열의 첫 번째 요소로 설정
+  // })
+    
   const handleSubmit = (event) => {
     event.preventDefault(); //새로고침방지
 
@@ -24,24 +30,13 @@ function Write_Essay() {
       setTitle('');
       setContent('');
       alert('등록되었습니다!');
-      navigate('../');
+      setPosts(response.data);
+      navigate('/');
     })
     .catch(error => {
       console.error('error occur!', error);
     });
   }
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/categories/showcategory')
-      .then(response => {
-        setName(response.data);
-        console.log(name);
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
-      });
-  }, []); 
 
   return (
     <div className="write-post">
@@ -49,9 +44,9 @@ function Write_Essay() {
       <form onSubmit={handleSubmit}>
         <div>
         <select value={selectedOption} onChange={handleChange}>
-          {name.map((name) => (
-            <option key={name.name} value={name.name}> 
-              {name.name}
+          {categories.map((category) => (
+            <option key={category.name} value={category.name}> 
+              {category.name}
             </option> //키와 밸류 모르겠음;;;
           ))}
         </select>
@@ -81,4 +76,4 @@ function Write_Essay() {
     </div>
   );
 }
-export default Write_Essay;
+export default WritePost;

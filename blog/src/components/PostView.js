@@ -1,31 +1,17 @@
-import axios from "axios";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useContext } from 'react';
 import { useParams } from "react-router-dom";
+import { AppDataContext } from './DataContext';
 
 const PostView = () => {
-    const [posts, setposts] = useState([])
+    const { posts } = useContext(AppDataContext);
     const { id } = useParams();
-    const fetch_post = () => {
-        axios.get('http://localhost:5000/posts/showpost')
-            .then(response => {
-                const postData = response.data;
-                const foundPost = postData.find(post => post.id === parseInt(id));
-                setposts(foundPost);
-            })
-            .catch(error => {
-                console.error('Error fetching titles:', error);
-            });
-    };
-    useEffect(() => {
-        fetch_post();
-    }, []);
+    const post = posts.find(post => post.id === parseInt(id));
 
     return (
         <div>
-            <h2>{posts.title}</h2>
-            <p>{posts.content}</p>
-            <p>{posts.category_name}</p>
+            <h2>{post.title}</h2>
+            <p>{post.content}</p>
+            <p>{post.category_name}</p>
         </div>
     );
 }

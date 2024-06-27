@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from './Header';
 import Left from './Left';
 import Right from './Right';
 import Footer from './Footer';
 import { Outlet } from 'react-router-dom';
+import { AppDataContext } from './DataContext';
 
 function Layout() {
+  const { loading, error } = useContext(AppDataContext);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div className="grid-container">
       <Header />

@@ -6,8 +6,9 @@ router.post('/', async (req, res) => { //데이터를 서버에 제출하거나 
     const { name } = req.body; //req.body에서 추출하여서 title, content에 저장
     try {
         const [result] = await db.query('INSERT INTO categories (name) VALUES (?)', [name]); //posts테이블에 title, content값 삽입
-        res.json({ id: result.insertId, name }); //삽입Id, 타이틀, 컨텐츠가 반환
-    } catch (error) {
+        const [rows] = await db.query('SELECT id, name FROM categories ORDER BY id ASC'); //여기서의 rows, 배열의 row
+        //const titles = rows.map(row=>row.title); //rows.map의미: rows배열에 들어있는 {title: 첫글}과 같은 객체에서 title을 뽑아옴
+        res.json(rows);    } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
