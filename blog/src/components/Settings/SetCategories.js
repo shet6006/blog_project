@@ -33,10 +33,10 @@ function SetCategories() {
             {categories.map(category => (
                 <div key={category.name}>
                     <span>{category.name}</span>
-                    <button onClick={() => delete_Category(category.id)}>삭제</button>
+                    <button className="fade-button" onClick={() => delete_Category(category.id)}>삭제</button>
                 </div>
             ))}
-            <button onClick={create_Category}>카테고리 생성</button>
+            <button className="fade-button" onClick={create_Category}>카테고리 생성</button>
         </div>
     );
 }

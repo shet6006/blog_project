@@ -32,11 +32,11 @@ function Content() {
             {posts.map((post, index) => (
                 <div key={post.id}>
                     <span onClick={() => handle_PostView(post.id)}>{index + 1} {post.title}</span>
-                    <button onClick={() => delete_Post(post.id)}>글 삭제</button>
+                    <button class="fade-button" onClick={() => delete_Post(post.id)}>글 삭제</button>
                 </div>
             ))}
             {/* <button onClick={createCategory}>카테고리 생성</button> */}
-            <button onClick={create_Post}>글 쓰기</button>
+            <button className="fade-button" onClick={create_Post}>글 쓰기</button>
         </div>
     );
 }

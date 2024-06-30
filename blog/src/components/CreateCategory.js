@@ -34,7 +34,7 @@ function CreateCategory() {
                     <label>카테고리명: </label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
                 </div>
-                <button type="submit">등록</button>
+                <button className="fade-button" type="submit">등록</button>
             </form>
         </div>
     );

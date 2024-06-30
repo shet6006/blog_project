@@ -14,8 +14,8 @@ function Settings() {
 
     return (
         <div>
-            <button onClick={categorySettings}>카테고리 관리</button>
-            <button onClick={postSettings}>게시글 관리</button>
+            <button className="fade-button" onClick={categorySettings}>카테고리 관리</button>
+            <button className="fade-button" onClick={postSettings}>게시글 관리</button>
         </div>
     );
 }

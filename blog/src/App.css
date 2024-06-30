@@ -82,3 +82,67 @@ body {
 p {
   margin: 5px; /* 위아래 간격을 5px로 설정 */
 }
+
+.setting {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  position: relative; /* 툴팁을 절대 위치로 배치하기 위해 상대 위치 설정 */
+}
+
+.setting img {
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.setting:hover img {
+  border-color: gray; /* hover 시 테두리 색상 설정 */
+}
+
+.tooltip {
+  visibility: hidden;
+  display: inline-block; /* 글씨 크기에 맞게 너비 조정 */
+  background-color: rgb(221, 219, 219);
+  color: black;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: -125%; /* 버튼 위에 말풍선을 위치 */
+  left: 50%;
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  transform: translateX(-50%); /* 말풍선을 중앙 정렬 */
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.setting:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.fade-button {
+  background-color: gray; /* 기본 배경색 */
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius:5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background-color 0.5s ease, color 0.5s ease; /* fade 효과를 위한 트랜지션 설정 */
+}
+
+.fade-button:hover {
+  background-color: #696969; /* hover 시 어두운 회색 */
+    color: #ffffff; /* hover 시 글자색 */
+}

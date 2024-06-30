@@ -1,32 +1,20 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AppDataContext } from "../DataContext";
+import React, { useContext } from 'react';
 
 function SetPosts(){
-    const [title, setTitle] = useState([]);
     const navigate = useNavigate();
+    const { posts, setPosts } = useContext(AppDataContext);
 
-    const fetch_post = () => {
-        axios.get('http://localhost:5000/posts/showpost')
-        .then(response => {
-          setTitle(response.data);
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching titles:', error);
-        });
-      };
-  
-      useEffect(() => {
-        fetch_post();
-      }, []);
 
     //게시글 삭제
     const delete_Post = (id) => {
         axios.delete('http://localhost:5000/posts/deletepost', { params: { id } })
         .then(response => {
-          fetch_post();
+          const updatedPosts = posts.filter(post => posts.id !== id);
+          setPosts(updatedPosts);
         })
         .catch(error => {
           console.error('Error deleting post:', error);
@@ -40,13 +28,13 @@ function SetPosts(){
     return(
         <div>
             <h1>카테고리 목록</h1>
-            {title.map(title => (
-                <div key={title.id}>
-                    <span>{title.title}</span>
-                    <button onClick={() => delete_Post(title.id)}>삭제</button>
+            {posts.map(post => (
+                <div key={post.id}>
+                    <span>{post.title}</span>
+                    <button className="fade-button" onClick={() => delete_Post(post.id)}>삭제</button>
                 </div>
             ))}
-            <button onClick={create_Post}>글 쓰기</button>
+            <button className="fade-button" onClick={create_Post}>글 쓰기</button>
         </div>
     );
 }

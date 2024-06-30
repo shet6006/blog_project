@@ -70,7 +70,7 @@ function WritePost() {
             onChange={(e) => setContent(e.target.value)} // Update the content state on input change
           ></textarea>
         </div>
-        <button type="submit">Submit</button>
+        <button className="fade-button" type="submit">Submit</button>
       </form>
 
     </div>
