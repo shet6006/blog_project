@@ -6,9 +6,13 @@ function Header() {
   const handleSettings = () => {
     navigate(`/settings`);
   }
+
+  const go_Home = () => {
+    navigate(`/`);
+  }
   return (
     <header className="header">
-      <h1>Header</h1>
+      <h1 onClick={go_Home}>Header</h1>
       <button className="setting" onClick={handleSettings}>
         <img src="images/settings.png"></img>
         <span className="tooltip">설정</span>

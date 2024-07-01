@@ -7,7 +7,7 @@ import React, { useContext } from 'react';
 function SetPosts(){
     const navigate = useNavigate();
     const { posts, setPosts } = useContext(AppDataContext);
-
+    const { categories } = useContext(AppDataContext);
 
     //게시글 삭제
     const delete_Post = (id) => {
@@ -22,9 +22,13 @@ function SetPosts(){
       };
 
     //글쓰기
-    const create_Post = () =>{
-        navigate(`/writepost`);
-    }
+    const create_Post = () => {
+        if(categories.length === 0 ){
+            alert('카테고리를 먼저 생성해주세요!');
+        }else
+            navigate(`/writepost`);
+    };
+
     return(
         <div>
             <h1>글 목록</h1>
