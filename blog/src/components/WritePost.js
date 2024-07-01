@@ -2,25 +2,25 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { AppDataContext } from './DataContext';
+import CKEditorComponent from './CKEditorComponent';
 
 function WritePost() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const { posts, setPosts } = useContext(AppDataContext);
-  const { categories, setCategories } = useContext(AppDataContext);
+  const { categories } = useContext(AppDataContext);
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(categories[0].name); //select박스에서 선택된 옵션
-  
+
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  // useEffect(() => {
-  //   setSelectedOption(categories[0].name); // categories 배열의 첫 번째 요소로 설정
-  // })
-    
+  const handleEditorChange = (data) => {
+    setContent(data);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault(); //새로고침방지
 
@@ -43,14 +43,14 @@ function WritePost() {
       <h2>Write Post</h2>
       <form onSubmit={handleSubmit}>
         <div>
-        <select value={selectedOption} onChange={handleChange}>
-          {categories.map((category) => (
-            <option key={category.name} value={category.name}> 
-              {category.name}
-            </option> //키와 밸류 모르겠음;;;
-          ))}
-        </select>
-      </div>
+          <select value={selectedOption} onChange={handleChange}>
+            {categories.map((category) => (
+              <option key={category.name} value={category.name}> 
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div>
           <label htmlFor="title">Title:</label>
           <input
@@ -58,22 +58,20 @@ function WritePost() {
             id="title"
             name="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)} // Update the title state on input change, e=변화느낌
+            onChange={(e) => setTitle(e.target.value)} // Update the title state on input change
           />
         </div>    
         <div>
           <label htmlFor="content">Content:</label>
-          <textarea
-            id="content"
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)} // Update the content state on input change
-          ></textarea>
+          <CKEditorComponent
+            data={content}
+            onChange={handleEditorChange}
+          />
         </div>
         <button className="fade-button" type="submit">Submit</button>
       </form>
-
     </div>
   );
 }
+
 export default WritePost;

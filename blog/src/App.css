@@ -150,3 +150,7 @@ p {
 .underline-list:hover {
   text-decoration: underline;
 }
+/* src/components/CKEditorComponent.css */
+.ckeditor-container .ck-editor__editable {
+  min-height: 300px; /* 원하는 높이로 설정 */
+}

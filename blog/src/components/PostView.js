@@ -7,12 +7,17 @@ const PostView = () => {
     const { id } = useParams();
     const post = posts.find(post => post.id === parseInt(id));
 
+    if (!post) {
+        return <div>Post not found</div>;
+    }
+
     return (
         <div>
             <h2>{post.title}</h2>
-            <p>{post.content}</p>
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
             <p>{post.category_name}</p>
         </div>
     );
-}
+};
+
 export default PostView;
