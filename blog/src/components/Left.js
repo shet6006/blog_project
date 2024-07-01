@@ -1,31 +1,30 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { AppDataContext } from './DataContext';
+import { useNavigate } from 'react-router-dom';
 
 function Left() {
   const { categories, posts } = useContext(AppDataContext);
-  const [openCategory, setOpenCategory] = useState(null);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-
-  useEffect(() => {
-    if (openCategory) {
-      const selectPost = posts.filter(post => post.category_name === openCategory);
-      setFilteredPosts(selectPost);
-      console.log(selectPost);
-    } else {
-      setFilteredPosts([]);
-    }
-  }, [openCategory, posts]);
+  const [categoryStates, setCategoryStates] = useState({}); // 각 카테고리의 상태를 객체로 관리
+  const navigate = useNavigate();
 
   const togglePostList = (categoryName) => {
-    const newOpenCategory = openCategory === categoryName ? null : categoryName;
-    setOpenCategory(newOpenCategory);
-    console.log(`Selected category: ${newOpenCategory}`);
+    setCategoryStates(prevState => ({
+      ...prevState,
+      [categoryName]: !prevState[categoryName]
+    }));
+    console.log(`Toggled category: ${categoryName}`);
   };
 
-  const getPostsForCategory = (categoryName) => {
-    const filteredPosts = posts.filter(post => post.category_name === categoryName);
-    console.log(`Filtered posts for category '${categoryName}':`, filteredPosts);
-    return filteredPosts;
+  const filteredPostsByCategory = useMemo(() => {
+    const filtered = {};
+    categories.map(category => {
+      filtered[category.name] = posts.filter(post => post.category_name === category.name);
+    });
+    return filtered;
+  }, [posts, categories]);
+
+  const handle_Postview = (id) => {
+    navigate(`/postview/${id}`);
   };
 
   return (
@@ -39,10 +38,10 @@ function Left() {
             >
               {category.name}
             </div>
-            {openCategory === category.name && (
-              <ul>
-                {getPostsForCategory(category.name).map(post => (
-                  <li key={post.id}>{post.title}</li>
+            {categoryStates[category.name] && (
+              <ul style={{ margin: '0 0 0 15px', padding: 0 }}>
+                {filteredPostsByCategory[category.name].map(post => (
+                  <li className="underline-list" onClick={() => handle_Postview(post.id)} key={post.id} style={{ fontSize: '10px' }}>{post.title}</li>
                 ))}
               </ul>
             )}

@@ -26,6 +26,8 @@ router.get('/showcategory', async (req, res) => { //데이터를 읽거나 가�
 router.delete('/deletecategory', async (req, res) => {
     try {
         const id = req.query.id;
+        const category_name = req.query.name;
+        await db.query('DELETE FROM posts WHERE category_name = ?',[category_name]);
         await db.query('DELETE FROM categories WHERE id = ?', [id]);
         res.status(204).send(); // 메시지 없이 성공적인 삭제 응답
     } catch (error) {

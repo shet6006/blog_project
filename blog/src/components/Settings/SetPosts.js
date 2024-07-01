@@ -13,7 +13,7 @@ function SetPosts(){
     const delete_Post = (id) => {
         axios.delete('http://localhost:5000/posts/deletepost', { params: { id } })
         .then(response => {
-          const updatedPosts = posts.filter(post => posts.id !== id);
+          const updatedPosts = posts.filter(post => post.id !== id);
           setPosts(updatedPosts);
         })
         .catch(error => {
@@ -27,7 +27,7 @@ function SetPosts(){
     }
     return(
         <div>
-            <h1>카테고리 목록</h1>
+            <h1>글 목록</h1>
             {posts.map(post => (
                 <div key={post.id}>
                     <span>{post.title}</span>

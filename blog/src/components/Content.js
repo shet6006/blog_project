@@ -6,6 +6,7 @@ import { AppDataContext } from './DataContext';
 function Content() {
     const navigate = useNavigate();
     const { posts, setPosts } = useContext(AppDataContext);
+    const { categories } = useContext(AppDataContext);
 
     const delete_Post = (id) => {
         axios.delete('http://localhost:5000/posts/deletepost', { params: { id } })
@@ -20,7 +21,10 @@ function Content() {
     };
 
     const create_Post = () => {
-        navigate(`/writepost`);
+        if(categories.length === 0 ){
+            alert('카테고리를 먼저 생성해주세요!');
+        }else
+            navigate(`/writepost`);
     };
 
     const handle_PostView = (id) => {
