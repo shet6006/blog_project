@@ -146,3 +146,7 @@ p {
   background-color: #696969; /* hover 시 어두운 회색 */
     color: #ffffff; /* hover 시 글자색 */
 }
+
+.underline-list:hover {
+  text-decoration: underline;
+}

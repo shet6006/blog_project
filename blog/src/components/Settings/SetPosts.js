@@ -27,7 +27,7 @@ function SetPosts(){
     }
     return(
         <div>
-            <h1>카테고리 목록록</h1>
+            <h1>카테고리 목록</h1>
             {posts.map(post => (
                 <div key={post.id}>
                     <span>{post.title}</span>
